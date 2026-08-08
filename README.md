@@ -93,7 +93,7 @@ nltx/
 
 ```bash
 # Clone the repository
-git clone https://github.com/krishnabandewar/nltx.git
+git clone https://github.com/SameerPendam/NLTX.git
 cd nltx/nltx-backend
 
 # Install dependencies
