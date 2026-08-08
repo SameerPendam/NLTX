@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard – NLTX</title>
+    <meta name="description" content="NLTX Dashboard – your blockchain payment control center." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="src/global.css" />
+    <link rel="stylesheet" href="src/dashboard.css" />
+</head>
+
+<body>
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <span class="logo-hex">⬡</span>
+                <span>NLTX</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <span class="sidebar-section-label">Main</span>
+                <a href="dashboard.html" class="sidebar-item active" id="nav-dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="chat.html" class="sidebar-item" id="nav-chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    NLP Chat
+                    <span class="sidebar-badge">AI</span>
+                </a>
+                <a href="transactions.html" class="sidebar-item" id="nav-tx">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                    Transactions
+                </a>
+                <a href="wallet.html" class="sidebar-item" id="nav-wallet">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="4" width="22" height="16" rx="2" />
+                        <path d="M1 10h22" />
+                    </svg>
+                    Wallet
+                </a>
+                <a href="analytics.html" class="sidebar-item" id="nav-analytics">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                    Analytics
+                </a>
+
+                <span class="sidebar-section-label">Platforms</span>
+                <div class="sidebar-item" id="telegramConnect">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="color:#2AABEE">
+                        <path
+                            d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z" />
+                    </svg>
+                    Telegram
+                    <span class="sidebar-badge" style="background:rgba(42,171,238,0.2);color:#2AABEE">Primary</span>
+                </div>
+                <div class="sidebar-item" id="discordConnect">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="color:#5865F2">
+                        <path
+                            d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 0 0-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 0 0-5.487 0 12.36 12.36 0 0 0-.617-1.23A.077.077 0 0 0 8.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 0 0-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 0 0 .031.055 20.03 20.03 0 0 0 5.993 2.98.078.078 0 0 0 .084-.026 13.83 13.83 0 0 0 1.226-1.963.074.074 0 0 0-.041-.104 13.175 13.175 0 0 1-1.872-.878.075.075 0 0 1-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 0 1 .078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 0 1 .079.009c.12.098.245.195.372.288a.075.075 0 0 1-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 0 0-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 0 0 .084.028 19.963 19.963 0 0 0 6.002-2.981.076.076 0 0 0 .032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 0 0-.031-.028z" />
+                    </svg>
+                    Discord
+                    <span class="sidebar-badge" style="background:rgba(88,101,242,0.15);color:#a5b4fc">Optional</span>
+                </div>
+                <div class="sidebar-item" id="whatsappConnect">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="color:#25D366">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                    </svg>
+                    WhatsApp
+                    <span class="sidebar-badge" style="background:rgba(37,211,102,0.12);color:#6ee7b7">Optional</span>
+                </div>
+
+                <span class="sidebar-section-label">Settings</span>
+                <a href="settings.html" class="sidebar-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                    </svg>
+                    Settings
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user" id="sidebarUser">
+                    <div class="user-avatar-sm">R</div>
+                    <div>
+                        <div class="user-name">Rahul Sharma</div>
+                        <div class="user-email">rahul@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main-content">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <button class="topbar-btn" id="sidebarToggle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+                <div>
+                    <div class="topbar-title">Dashboard</div>
+                    <div class="topbar-subtitle">Good day, <span class="greeting-name">User</span> 👋</div>
+                </div>
+                <div class="topbar-spacer"></div>
+                <div class="topbar-network-badge" id="networkBadge">
+                    <span class="status-dot online"></span>
+                    ⚗️ Sepolia Testnet
+                </div>
+                <button class="topbar-btn" id="notifBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                </button>
+                <a href="login.html" class="topbar-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                </a>
+            </header>
+
+            <div class="page-content">
+
+                <!-- QUICK SEND BAR -->
+                <div class="quick-send-bar">
+                    <div class="quick-send-icon">⚡</div>
+                    <input type="text" class="quick-send-input" id="quickSend"
+                        placeholder='Try: "Send 10 USDT to Alice" or "Pay Bob 0.01 ETH for coffee"' />
+                    <button class="btn-primary quick-send-btn" id="quickSendBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                        Send
+                    </button>
+                    <a href="chat.html" class="btn-secondary quick-chat-btn">Full NLP Chat →</a>
+                </div>
+
+                <!-- STAT CARDS -->
+                <div class="grid grid-4 gap-20" style="margin-bottom:24px">
+                    <div class="stat-card">
+                        <div class="stat-card-label">Total Portfolio</div>
+                        <div class="stat-card-value" id="portfolioValue">$12,847.32</div>
+                        <div class="stat-card-change change-pos">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="18 15 12 9 6 15" />
+                            </svg>
+                            +$1,247.50 (10.7%) today
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">This Month Sent</div>
+                        <div class="stat-card-value">$4,230.00</div>
+                        <div class="stat-card-change change-neg">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                            28 transactions
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Gas Saved (MPC)</div>
+                        <div class="stat-card-value" style="color:var(--accent-green)">$183.40</div>
+                        <div class="stat-card-change" style="color:var(--text-muted)">Auto-optimized routing</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Active Networks</div>
+                        <div class="stat-card-value">3</div>
+                        <div class="stat-card-change" style="color:var(--text-muted)">ETH · MATIC · SOL</div>
+                    </div>
+                </div>
+
+                <!-- MAIN GRID -->
+                <div class="dashboard-grid">
+
+                    <!-- PORTFOLIO BALANCES -->
+                    <div class="card portfolio-card">
+                        <div class="card-header">
+                            <span class="card-title">Wallet Balances</span>
+                            <div class="card-actions">
+                                <button class="btn-sm btn-secondary" id="refreshBalances">↻ Refresh</button>
+                                <a href="wallet.html" class="btn-sm btn-ghost">View All →</a>
+                            </div>
+                        </div>
+                        <div class="balance-list" id="balanceList">
+                            <div class="balance-item">
+                                <div class="token-icon eth-icon">Ξ</div>
+                                <div class="token-info">
+                                    <div class="token-name">Ethereum <span class="token-network">Mainnet</span></div>
+                                    <div class="token-amount">2.4831 ETH</div>
+                                </div>
+                                <div class="token-value">
+                                    <div class="token-usd">$6,183.40</div>
+                                    <div class="token-change change-pos">+2.4%</div>
+                                </div>
+                            </div>
+                            <div class="balance-item">
+                                <div class="token-icon matic-icon">⬡</div>
+                                <div class="token-info">
+                                    <div class="token-name">Polygon <span class="token-network">Layer 2</span></div>
+                                    <div class="token-amount">12,500 MATIC</div>
+                                </div>
+                                <div class="token-value">
+                                    <div class="token-usd">$2,987.50</div>
+                                    <div class="token-change change-pos">+1.1%</div>
+                                </div>
+                            </div>
+                            <div class="balance-item">
+                                <div class="token-icon sol-icon">◎</div>
+                                <div class="token-info">
+                                    <div class="token-name">Solana <span class="token-network">Mainnet</span></div>
+                                    <div class="token-amount">18.92 SOL</div>
+                                </div>
+                                <div class="token-value">
+                                    <div class="token-usd">$1,909.92</div>
+                                    <div class="token-change change-neg">-0.8%</div>
+                                </div>
+                            </div>
+                            <div class="balance-item">
+                                <div class="token-icon usdt-icon">₮</div>
+                                <div class="token-info">
+                                    <div class="token-name">USDT <span class="token-network">ERC-20</span></div>
+                                    <div class="token-amount">1,766.50 USDT</div>
+                                </div>
+                                <div class="token-value">
+                                    <div class="token-usd">$1,766.50</div>
+                                    <div class="token-change" style="color:var(--text-muted)">Stable</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Price Chart -->
+                        <div class="mini-chart-section">
+                            <div class="mini-chart-label">Portfolio Value (7D)</div>
+                            <canvas id="miniChart" width="100%" height="80"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- QUICK ACTIONS -->
+                    <div class="quick-actions-card">
+                        <div class="card-header"><span class="card-title">Quick Actions</span></div>
+                        <div class="actions-grid">
+                            <button class="action-btn" id="sendBtn">
+                                <div class="action-icon" style="background:rgba(124,58,237,0.15);color:#a78bfa">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <line x1="22" y1="2" x2="11" y2="13" />
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                                    </svg>
+                                </div>
+                                <span>Send</span>
+                            </button>
+                            <button class="action-btn" id="receiveBtn">
+                                <div class="action-icon" style="background:rgba(16,185,129,0.15);color:#34d399">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="8 17 12 21 16 17" />
+                                        <line x1="12" y1="12" x2="12" y2="21" />
+                                        <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29" />
+                                    </svg>
+                                </div>
+                                <span>Receive</span>
+                            </button>
+                            <button class="action-btn" id="swapBtn">
+                                <div class="action-icon" style="background:rgba(37,99,235,0.15);color:#60a5fa">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="16 3 21 3 21 8" />
+                                        <line x1="4" y1="20" x2="21" y2="3" />
+                                        <polyline points="21 16 21 21 16 21" />
+                                        <line x1="15" y1="15" x2="21" y2="21" />
+                                    </svg>
+                                </div>
+                                <span>Swap</span>
+                            </button>
+                            <button class="action-btn" id="scheduleBtn">
+                                <div class="action-icon" style="background:rgba(245,158,11,0.15);color:#fbbf24">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg>
+                                </div>
+                                <span>Schedule</span>
+                            </button>
+                            <button class="action-btn" id="requestBtn">
+                                <div class="action-icon" style="background:rgba(236,72,153,0.15);color:#f472b6">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                    </svg>
+                                </div>
+                                <span>Request</span>
+                            </button>
+                            <a href="analytics.html" class="action-btn">
+                                <div class="action-icon" style="background:rgba(6,182,212,0.15);color:#22d3ee">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                    </svg>
+                                </div>
+                                <span>Analytics</span>
+                            </a>
+                        </div>
+
+                        <!-- SPENDING LIMITS -->
+                        <div class="spending-limits">
+                            <div class="card-header" style="margin-bottom:12px">
+                                <span class="card-title">Daily Spending Limit</span>
+                                <a href="settings.html" class="btn-sm btn-ghost" style="font-size:0.75rem">Configure</a>
+                            </div>
+                            <div class="limit-bar-wrap">
+                                <div class="limit-info">
+                                    <span>$1,200 used</span>
+                                    <span class="limit-total">of $5,000</span>
+                                </div>
+                                <div class="limit-bar">
+                                    <div class="limit-fill" style="width:24%"></div>
+                                </div>
+                                <div class="limit-pct">24% used today</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RECENT TRANSACTIONS -->
+                    <div class="card recent-tx-card">
+                        <div class="card-header">
+                            <span class="card-title">Recent Transactions</span>
+                            <a href="transactions.html" class="btn-sm btn-ghost">View All →</a>
+                        </div>
+                        <div class="tx-list" id="txList">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- NLP ACTIVITY -->
+                    <div class="card nlp-activity-card">
+                        <div class="card-header">
+                            <span class="card-title">NLP Activity</span>
+                            <a href="chat.html" class="btn-sm btn-primary btn-sm">Open Chat</a>
+                        </div>
+                        <div class="nlp-stats">
+                            <div class="nlp-stat">
+                                <div class="nlp-stat-value">127</div>
+                                <div class="nlp-stat-label">Commands This Month</div>
+                            </div>
+                            <div class="nlp-stat">
+                                <div class="nlp-stat-value" style="color:var(--accent-green)">97.6%</div>
+                                <div class="nlp-stat-label">Parse Accuracy</div>
+                            </div>
+                            <div class="nlp-stat">
+                                <div class="nlp-stat-value">1.2s</div>
+                                <div class="nlp-stat-label">Avg Response Time</div>
+                            </div>
+                        </div>
+                        <div class="recent-commands">
+                            <div class="cmd-item">
+                                <div class="cmd-text">"Send 50 USDT to Alice for groceries"</div>
+                                <div class="cmd-result success">✓ Executed</div>
+                            </div>
+                            <div class="cmd-item">
+                                <div class="cmd-text">"What's my ETH balance?"</div>
+                                <div class="cmd-result info">ℹ Balance: 2.48 ETH</div>
+                            </div>
+                            <div class="cmd-item">
+                                <div class="cmd-text">"Schedule monthly 200 USDT to savings"</div>
+                                <div class="cmd-result success">✓ Scheduled</div>
+                            </div>
+                            <div class="cmd-item">
+                                <div class="cmd-text">"Swap 100 USDT to MATIC"</div>
+                                <div class="cmd-result warning">⏳ Processing</div>
+                            </div>
+                        </div>
+                        <a href="chat.html" class="full-chat-cta">
+                            💬 Try NLP Chat — powered by GPT-4 →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- SEND MODAL -->
+    <div class="modal-overlay hidden" id="sendModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Send Crypto</h3>
+                <button class="modal-close" id="closeSendModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="nlp-send-bar">
+                    <span class="nlp-icon">✨</span>
+                    <input type="text" class="input-field nlp-parse-input" id="nlpParseInput"
+                        placeholder='Type naturally: "Send 10 USDT to Bob for lunch"' />
+                    <button class="btn-primary btn-sm" id="nlpParseBtn">Parse</button>
+                </div>
+                <div class="modal-divider"><span>or fill manually</span></div>
+                <div class="send-form">
+                    <div class="input-group">
+                        <label class="input-label">Recipient</label>
+                        <input type="text" class="input-field" id="sendTo"
+                            placeholder="@username, ENS name, or wallet address" />
+                    </div>
+                    <div class="send-amount-row">
+                        <div class="input-group" style="flex:1">
+                            <label class="input-label">Amount</label>
+                            <input type="number" class="input-field" id="sendAmount" placeholder="0.00" />
+                        </div>
+                        <div class="input-group" style="flex:0 0 120px">
+                            <label class="input-label">Token</label>
+                            <select class="input-field select-field" id="sendToken">
+                                <option>ETH</option>
+                                <option>USDT</option>
+                                <option>USDC</option>
+                                <option>MATIC</option>
+                                <option>SOL</option>
+                                <option>BTC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Memo (optional)</label>
+                        <input type="text" class="input-field" id="sendMemo"
+                            placeholder="e.g. Rent payment for March" />
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Network</label>
+                        <select class="input-field select-field" id="sendNetwork">
+                            <option>Ethereum (Auto-optimized)</option>
+                            <option>Polygon (Low fees)</option>
+                            <option>Solana (Fastest)</option>
+                        </select>
+                    </div>
+
+                    <div class="tx-preview" id="txPreview">
+                        <div class="preview-row"><span>Estimated Gas</span><span class="preview-val">~$0.42</span></div>
+                        <div class="preview-row"><span>Total</span><span class="preview-val preview-total">—</span>
+                        </div>
+                        <div class="preview-row"><span>30s Undo Window</span><span class="preview-val"
+                                style="color:var(--accent-green)">✓ Enabled</span></div>
+                    </div>
+
+                    <div id="otpSection" class="hidden"
+                        style="margin-top:20px; padding:15px; background:rgba(124,58,237,0.1); border-radius:10px; border:1px solid var(--accent-purple)">
+                        <label
+                            style="display:block; font-size:0.8rem; margin-bottom:8px; font-weight:600; color:#a78bfa">🔒
+                            Two-Factor Authentication Required</label>
+                        <input type="text" id="otpInput" placeholder="Enter 6-digit code (Use 123456)" maxlength="6"
+                            style="width:100%; padding:10px; background:var(--bg-tertiary); border:1px solid var(--border); border-radius:8px; color:#fff; text-align:center; font-size:1.2rem; letter-spacing:4px; font-family:monospace">
+                    </div>
+
+                    <button class="btn-primary btn-full" id="confirmSendBtn">
+                        Review & Confirm →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RECEIVE MODAL -->
+    <div class="modal-overlay hidden" id="receiveModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Receive Crypto</h3>
+                <button class="modal-close" id="closeReceiveModal">✕</button>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p style="color:var(--text-secondary);margin-bottom:20px">Share your Sepolia testnet address below to receive test ETH</p>
+                <div class="receive-username">
+                    <span class="receive-label">NLTX Username</span>
+                    <div class="receive-value user-name">@user</div>
+                    <p style="font-size:0.8rem;color:var(--text-muted)">Anyone can type "Send X to @yourname" in NLTX</p>
+                </div>
+                <div class="wallet-address-display" id="receiveAddress" style="word-break:break-all;font-size:0.75rem;padding:12px;background:var(--bg-tertiary);border-radius:8px;margin:16px 0">Loading...</div>
+                <button class="btn-secondary btn-full" id="copyAddressBtn">📋 Copy Address</button>
+                <div style="margin-top:16px;display:flex;gap:12px;justify-content:center">
+                    <a id="receiveExplorerLink" href="#" target="_blank" style="display:none;font-size:0.8rem;color:var(--accent-purple)">🔍 View on Explorer</a>
+                    <a id="receiveFaucetLink" href="https://sepoliafaucet.com" target="_blank" style="font-size:0.8rem;color:#34d399">💧 Get Free Sepolia ETH</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNDO TOAST -->
+    <div class="undo-toast hidden" id="undoToast">
+        <div class="undo-info">
+            <span class="undo-icon">⏱</span>
+            <div>
+                <div class="undo-title">Transaction Sent</div>
+                <div class="undo-sub">You can undo within <span id="undoCountdown">30</span>s</div>
+            </div>
+        </div>
+        <button class="btn-danger btn-sm" id="undoBtn">Undo</button>
+        <div class="undo-progress" id="undoBar"></div>
+    </div>
+
+    <script src="src/api.js"></script>
+    <script src="src/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wallet – NLTX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="src/global.css" />
+    <style>
+        .wallet-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .wallet-card {
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-card::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .wallet-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .wc-eth {
+            background: linear-gradient(135deg, #627EEA, #3C5BD9);
+        }
+
+        .wc-matic {
+            background: linear-gradient(135deg, #8247E5, #6332BD);
+        }
+
+        .wc-sol {
+            background: linear-gradient(135deg, #9945FF, #14F195);
+        }
+
+        .wallet-card-network {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-bottom: 16px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .wallet-card-balance {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .wallet-card-usd {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .wallet-card-addr {
+            font-family: monospace;
+            font-size: 0.7rem;
+            opacity: 0.6;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 6px 10px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            word-break: break-all;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wallet-card-actions {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wallet-card-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .wallet-card-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+        }
+
+        .token-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .token-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .token-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .token-card-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .token-card-sym {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .token-card-balance {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .token-card-usd {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .token-card-change {
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+        }
+
+        .sec-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .sec-info h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .sec-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .sec-status {
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><span class="logo-hex">⬡</span><span>NLTX</span></div>
+            <nav class="sidebar-nav">
+                <span class="sidebar-section-label">Main</span>
+                <a href="dashboard.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                    </svg>Dashboard</a>
+                <a href="chat.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>NLP Chat<span class="sidebar-badge">AI</span></a>
+                <a href="transactions.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>Transactions</a>
+                <a href="wallet.html" class="sidebar-item active"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="4" width="22" height="16" rx="2" />
+                        <path d="M1 10h22" />
+                    </svg>Wallet</a>
+                <a href="analytics.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>Analytics</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar-sm">R</div>
+                    <div>
+                        <div class="user-name">Rahul Sharma</div>
+                        <div class="user-email">rahul@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <button class="topbar-btn" id="sidebarToggle"><svg width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg></button>
+                <div>
+                    <div class="topbar-title">Wallet</div>
+                    <div class="topbar-subtitle">MPC-secured multi-chain wallet</div>
+                </div>
+                <div class="topbar-spacer"></div>
+                <span class="badge badge-success"><span class="status-dot online"></span>MPC Active</span>
+            </header>
+            <div class="page-content">
+
+                <!-- NETWORK WALLETS -->
+                <h3
+                    style="margin-bottom:16px;font-family:var(--font-display);font-size:1rem;color:var(--text-secondary)">
+                    Network Wallets</h3>
+                <div class="wallet-cards">
+                    <div class="wallet-card wc-eth">
+                        <div class="wallet-card-network">⬡ Ethereum Mainnet</div>
+                        <div class="wallet-card-balance">2.4831 ETH</div>
+                        <div class="wallet-card-usd">≈ $6,183.40 USD</div>
+                        <div class="wallet-card-addr">0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b</div>
+                        <div class="wallet-card-actions">
+                            <button class="wallet-card-btn"
+                                onclick="alert('Send ETH via NLP: type \'Send X ETH to Y\'')">↑ Send</button>
+                            <button class="wallet-card-btn"
+                                onclick="alert('Receive ETH: share your address or NLTX username')">↓ Receive</button>
+                            <button class="wallet-card-btn"
+                                onclick="navigator.clipboard.writeText('0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b')">📋
+                                Copy</button>
+                        </div>
+                    </div>
+                    <div class="wallet-card wc-matic">
+                        <div class="wallet-card-network">⬡ Polygon (MATIC)</div>
+                        <div class="wallet-card-balance">12,500 MATIC</div>
+                        <div class="wallet-card-usd">≈ $2,987.50 USD</div>
+                        <div class="wallet-card-addr">0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b</div>
+                        <div class="wallet-card-actions">
+                            <button class="wallet-card-btn">↑ Send</button>
+                            <button class="wallet-card-btn">↓ Receive</button>
+                            <button class="wallet-card-btn">📋 Copy</button>
+                        </div>
+                    </div>
+                    <div class="wallet-card wc-sol">
+                        <div class="wallet-card-network">◎ Solana Mainnet</div>
+                        <div class="wallet-card-balance">18.92 SOL</div>
+                        <div class="wallet-card-usd">≈ $1,909.92 USD</div>
+                        <div class="wallet-card-addr">4vMsoUT2BWatFweudnQM1xedRLfJgJ7hswhcpz4xgBTy</div>
+                        <div class="wallet-card-actions">
+                            <button class="wallet-card-btn">↑ Send</button>
+                            <button class="wallet-card-btn">↓ Receive</button>
+                            <button class="wallet-card-btn">📋 Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOKENS -->
+                <h3
+                    style="margin-bottom:16px;font-family:var(--font-display);font-size:1rem;color:var(--text-secondary)">
+                    Token Balances</h3>
+                <div class="token-grid" style="margin-bottom:28px">
+                    <div class="token-card">
+                        <div class="token-card-icon" style="color:#627EEA">Ξ</div>
+                        <div class="token-card-name">Ethereum</div>
+                        <div class="token-card-sym">ETH · ERC-20</div>
+                        <div class="token-card-balance">2.4831</div>
+                        <div class="token-card-usd">$6,183.40</div>
+                        <div class="token-card-change change-pos">+2.4%</div>
+                    </div>
+                    <div class="token-card">
+                        <div class="token-card-icon" style="color:#26A17B">₮</div>
+                        <div class="token-card-name">Tether USD</div>
+                        <div class="token-card-sym">USDT · ERC-20</div>
+                        <div class="token-card-balance">1,766.50</div>
+                        <div class="token-card-usd">$1,766.50</div>
+                        <div class="token-card-change" style="color:var(--text-muted)">Stable</div>
+                    </div>
+                    <div class="token-card">
+                        <div class="token-card-icon" style="color:#2775CA">◎</div>
+                        <div class="token-card-name">USD Coin</div>
+                        <div class="token-card-sym">USDC · ERC-20</div>
+                        <div class="token-card-balance">480.00</div>
+                        <div class="token-card-usd">$480.00</div>
+                        <div class="token-card-change" style="color:var(--text-muted)">Stable</div>
+                    </div>
+                    <div class="token-card">
+                        <div class="token-card-icon" style="color:#8247E5">⬡</div>
+                        <div class="token-card-name">Polygon</div>
+                        <div class="token-card-sym">MATIC · L2</div>
+                        <div class="token-card-balance">12,500</div>
+                        <div class="token-card-usd">$2,987.50</div>
+                        <div class="token-card-change change-pos">+1.1%</div>
+                    </div>
+                    <div class="token-card">
+                        <div class="token-card-icon" style="color:#9945FF">●</div>
+                        <div class="token-card-name">Solana</div>
+                        <div class="token-card-sym">SOL · Mainnet</div>
+                        <div class="token-card-balance">18.92</div>
+                        <div class="token-card-usd">$1,909.92</div>
+                        <div class="token-card-change change-neg">-0.8%</div>
+                    </div>
+                    <div class="token-card"
+                        style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer"
+                        onclick="alert('Add custom token: Enter contract address to track any ERC-20, SPL, or BEP-20 token')">
+                        <div style="font-size:1.5rem">+</div>
+                        <div style="font-size:0.8rem;color:var(--text-muted)">Add Token</div>
+                    </div>
+                </div>
+
+                <!-- SECURITY -->
+                <h3
+                    style="margin-bottom:16px;font-family:var(--font-display);font-size:1rem;color:var(--text-secondary)">
+                    Security Status</h3>
+                <div class="security-grid">
+                    <div class="security-item">
+                        <div class="sec-icon" style="background:rgba(16,185,129,0.12)">🔐</div>
+                        <div class="sec-info">
+                            <h4>MPC Wallet</h4>
+                            <p>Distributed key management · No single point of failure</p>
+                        </div>
+                        <div class="sec-status"><span class="badge badge-success">Active</span></div>
+                    </div>
+                    <div class="security-item">
+                        <div class="sec-icon" style="background:rgba(16,185,129,0.12)">🔑</div>
+                        <div class="sec-info">
+                            <h4>Two-Factor Auth</h4>
+                            <p>TOTP authenticator app enabled</p>
+                        </div>
+                        <div class="sec-status"><span class="badge badge-success">Enabled</span></div>
+                    </div>
+                    <div class="security-item">
+                        <div class="sec-icon" style="background:rgba(16,185,129,0.12)">🛡️</div>
+                        <div class="sec-info">
+                            <h4>Fraud Detection</h4>
+                            <p>ML-powered real-time analysis on all transactions</p>
+                        </div>
+                        <div class="sec-status"><span class="badge badge-success">Active</span></div>
+                    </div>
+                    <div class="security-item">
+                        <div class="sec-icon" style="background:rgba(245,158,11,0.12)">📋</div>
+                        <div class="sec-info">
+                            <h4>KYC Verification</h4>
+                            <p>Identity verification for high-value transactions</p>
+                        </div>
+                        <div class="sec-status"><span class="badge badge-warning">Level 1</span></div>
+                    </div>
+                    <div class="security-item">
+                        <div class="sec-icon" style="background:rgba(16,185,129,0.12)">🔒</div>
+                        <div class="sec-info">
+                            <h4>Spending Limits</h4>
+                            <p>Daily: $5,000 · Weekly: $25,000 · Monthly: $100,000</p>
+                        </div>
+                        <div class="sec-status"><span class="badge badge-success">Configured</span></div>
+                    </div>
+                    <div class="security-item">
+                        <div class="sec-icon" style="background:rgba(16,185,129,0.12)">⏱</div>
+                        <div class="sec-info">
+                            <h4>30s Undo Window</h4>
+                            <p>Cancel any mistake within 30 seconds of sending</p>
+                        </div>
+                        <div class="sec-status"><span class="badge badge-success">Always On</span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="src/api.js"></script>
+    <script src="src/wallet.js"></script>
+</body>
+
+</html>

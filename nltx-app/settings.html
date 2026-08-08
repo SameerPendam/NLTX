@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings – NLTX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="src/global.css" />
+    <style>
+        .settings-layout {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 24px;
+        }
+
+        .settings-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .settings-nav-item {
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-nav-item:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .settings-nav-item.active {
+            background: rgba(124, 58, 237, 0.12);
+            color: #a78bfa;
+        }
+
+        .settings-panel {
+            display: none;
+        }
+
+        .settings-panel.active {
+            display: block;
+        }
+
+        .settings-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .settings-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .settings-section-sub {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .settings-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .settings-row-label h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .settings-row-label p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .toggle {
+            width: 44px;
+            height: 24px;
+            border-radius: 12px;
+            background: var(--bg-tertiary);
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            top: 2px;
+            left: 2px;
+            transition: var(--transition);
+        }
+
+        .toggle.on {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+        }
+
+        .toggle.on::after {
+            left: 22px;
+        }
+
+        .limit-input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .platform-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .platform-item:last-child {
+            border-bottom: none;
+        }
+
+        .platform-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .platform-info {
+            flex: 1;
+        }
+
+        .platform-info h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .platform-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><span class="logo-hex">⬡</span><span>NLTX</span></div>
+            <nav class="sidebar-nav">
+                <span class="sidebar-section-label">Main</span>
+                <a href="dashboard.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                    </svg>Dashboard</a>
+                <a href="chat.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>NLP Chat<span class="sidebar-badge">AI</span></a>
+                <a href="transactions.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>Transactions</a>
+                <a href="wallet.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="1" y="4" width="22" height="16" rx="2" />
+                        <path d="M1 10h22" />
+                    </svg>Wallet</a>
+                <a href="analytics.html" class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>Analytics</a>
+                <span class="sidebar-section-label">Settings</span>
+                <a href="settings.html" class="sidebar-item active"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                    </svg>Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="user-avatar-sm">R</div>
+                    <div>
+                        <div class="user-name">Rahul Sharma</div>
+                        <div class="user-email">rahul@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <button class="topbar-btn" id="sidebarToggle"><svg width="18" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg></button>
+                <div>
+                    <div class="topbar-title">Settings</div>
+                    <div class="topbar-subtitle">Account, security & preferences</div>
+                </div>
+                <div class="topbar-spacer"></div>
+                <button class="btn btn-primary btn-sm" id="saveSettings">Save Changes</button>
+            </header>
+            <div class="page-content">
+                <div class="settings-layout">
+                    <!-- SETTINGS NAV -->
+                    <div class="settings-nav">
+                        <div class="settings-nav-item active" data-panel="profile">👤 Profile</div>
+                        <div class="settings-nav-item" data-panel="security">🔒 Security</div>
+                        <div class="settings-nav-item" data-panel="limits">💰 Spending Limits</div>
+                        <div class="settings-nav-item" data-panel="platforms">📱 Platforms</div>
+                        <div class="settings-nav-item" data-panel="nlp">🤖 NLP Settings</div>
+                        <div class="settings-nav-item" data-panel="notifications">🔔 Notifications</div>
+                        <div class="settings-nav-item" data-panel="api">🔌 API Access</div>
+                    </div>
+
+                    <!-- PANELS -->
+                    <div>
+                        <!-- PROFILE -->
+                        <div class="settings-panel active" id="panel-profile">
+                            <div class="settings-section">
+                                <div class="settings-section-title">Profile Information</div>
+                                <div class="settings-section-sub">Your public NLTX identity used for receiving payments.
+                                </div>
+                                <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+                                    <div
+                                        style="width:72px;height:72px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;color:#fff">
+                                        R</div>
+                                    <div><button class="btn btn-secondary btn-sm">Change Avatar</button>
+                                        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:6px">JPG, PNG up
+                                            to 2MB</p>
+                                    </div>
+                                </div>
+                                <div class="settings-form">
+                                    <div class="grid grid-2 gap-16">
+                                        <div class="input-group"><label class="input-label">First Name</label><input
+                                                type="text" class="input-field" value="Rahul" /></div>
+                                        <div class="input-group"><label class="input-label">Last Name</label><input
+                                                type="text" class="input-field" value="Sharma" /></div>
+                                    </div>
+                                    <div class="input-group"><label class="input-label">Username <span
+                                                style="color:var(--text-muted);font-weight:400">(for receiving
+                                                payments)</span></label><input type="text" class="input-field"
+                                            value="@rahul" /></div>
+                                    <div class="input-group"><label class="input-label">Email Address</label><input
+                                            type="email" class="input-field" value="rahul@example.com" /></div>
+                                    <div class="input-group"><label class="input-label">ENS Name
+                                            (optional)</label><input type="text" class="input-field" value="rahul.eth"
+                                            placeholder="yourname.eth" /></div>
+                                    <div class="input-group"><label class="input-label">Account Type</label><select
+                                            class="input-field select-field">
+                                            <option selected>Personal</option>
+                                            <option>Enterprise</option>
+                                            <option>DAO/Community</option>
+                                        </select></div>
+                                    <div class="input-group"><label class="input-label">Preferred
+                                            Language</label><select class="input-field select-field">
+                                            <option selected>English</option>
+                                            <option>Hindi</option>
+                                            <option>Spanish</option>
+                                            <option>Mandarin</option>
+                                            <option>Arabic</option>
+                                        </select></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECURITY -->
+                        <div class="settings-panel" id="panel-security">
+                            <div class="settings-section">
+                                <div class="settings-section-title">Security Settings</div>
+                                <div class="settings-section-sub">Protect your account and transactions with multiple
+                                    layers of security.</div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Two-Factor Authentication (TOTP)</h4>
+                                        <p>Require authenticator code for login and high-value transactions</p>
+                                    </div>
+                                    <div class="toggle on" id="toggle2fa"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>30-Second Transaction Undo</h4>
+                                        <p>Allow cancellation of any transaction within 30 seconds of sending</p>
+                                    </div>
+                                    <div class="toggle on" id="toggleUndo"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Real-time Fraud Detection</h4>
+                                        <p>ML-powered analysis flags suspicious transaction patterns</p>
+                                    </div>
+                                    <div class="toggle on" id="toggleFraud"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>New Device Verification</h4>
+                                        <p>Require email verification when logging in from new device</p>
+                                    </div>
+                                    <div class="toggle on" id="toggleDevice"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>MPC Wallet Mode</h4>
+                                        <p>Distributed key management — keys never fully assembled</p>
+                                    </div>
+                                    <div class="toggle on" id="toggleMPC" style="cursor:not-allowed;opacity:0.6"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Biometric Authentication</h4>
+                                        <p>Use fingerprint or face ID for quick transaction approval</p>
+                                    </div>
+                                    <div class="toggle" id="toggleBio"></div>
+                                </div>
+                            </div>
+                            <div class="settings-section">
+                                <div class="settings-section-title">Session Management</div>
+                                <div class="settings-section-sub">Control active sessions across all your devices.</div>
+                                <div style="display:flex;flex-direction:column;gap:10px">
+                                    <div
+                                        style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius-md)">
+                                        <div style="flex:1">
+                                            <div style="font-size:0.875rem;font-weight:600">Chrome on Windows</div>
+                                            <div style="font-size:0.75rem;color:var(--text-muted)">Current session ·
+                                                Mumbai, India</div>
+                                        </div><span class="badge badge-success">Current</span>
+                                    </div>
+                                    <div
+                                        style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--bg-secondary);border-radius:var(--radius-md)">
+                                        <div style="flex:1">
+                                            <div style="font-size:0.875rem;font-weight:600">Telegram Bot</div>
+                                            <div style="font-size:0.75rem;color:var(--text-muted)">Last active: 2 hours
+                                                ago</div>
+                                        </div><button class="btn btn-danger btn-sm">Revoke</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SPENDING LIMITS -->
+                        <div class="settings-panel" id="panel-limits">
+                            <div class="settings-section">
+                                <div class="settings-section-title">Spending Limits</div>
+                                <div class="settings-section-sub">Configure transaction limits to protect your funds.
+                                    Changes take effect immediately.</div>
+                                <div class="settings-form">
+                                    <div class="limit-input-row">
+                                        <div class="input-group"><label class="input-label">Daily Limit
+                                                ($)</label><input type="number" class="input-field" value="5000" />
+                                        </div>
+                                        <div class="input-group"><label class="input-label">Weekly Limit
+                                                ($)</label><input type="number" class="input-field" value="25000" />
+                                        </div>
+                                        <div class="input-group"><label class="input-label">Monthly Limit
+                                                ($)</label><input type="number" class="input-field" value="100000" />
+                                        </div>
+                                    </div>
+                                    <div class="input-group"><label class="input-label">Single Transaction Max
+                                            ($)</label><input type="number" class="input-field" value="10000" /></div>
+                                    <div class="input-group"><label class="input-label">Require 2FA Above
+                                            ($)</label><input type="number" class="input-field" value="500"
+                                            placeholder="0 to disable" /></div>
+                                    <div class="settings-row" style="padding-top:8px">
+                                        <div class="settings-row-label">
+                                            <h4>Require Approval for Large Transactions</h4>
+                                            <p>Transactions above 2FA threshold show a confirmation before executing</p>
+                                        </div>
+                                        <div class="toggle on"></div>
+                                    </div>
+                                    <div class="settings-row">
+                                        <div class="settings-row-label">
+                                            <h4>Cool-down Period</h4>
+                                            <p>1 hour cool-down after hitting daily limit</p>
+                                        </div>
+                                        <div class="toggle on"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PLATFORMS -->
+                        <div class="settings-panel" id="panel-platforms">
+                            <div class="settings-section">
+                                <div class="settings-section-title">Messaging</div>
+                                <div class="settings-section-sub"><strong>Telegram</strong> is the main integration (free
+                                    Bot API from @BotFather). Optional platforms are available if you enable them in the
+                                    backend.</div>
+                                <div class="platform-item">
+                                    <div class="platform-logo" style="background:rgba(42,171,238,0.12)"><svg width="24"
+                                            height="24" viewBox="0 0 24 24" fill="#2AABEE">
+                                            <path
+                                                d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z" />
+                                        </svg></div>
+                                    <div class="platform-info">
+                                        <h4>Telegram</h4>
+                                        <p>Recommended · Run the backend with your bot token, then link here.</p>
+                                    </div>
+                                    <span class="badge badge-success">Primary</span>
+                                    <button class="btn btn-success btn-sm">Connect</button>
+                                </div>
+                                <div class="settings-section-sub"
+                                    style="margin-top:20px;margin-bottom:8px;font-weight:600;opacity:0.9">Optional</div>
+                                <div class="platform-item" style="opacity:0.92">
+                                    <div class="platform-logo" style="background:rgba(88,101,242,0.12)"><svg width="24"
+                                            height="24" viewBox="0 0 24 24" fill="#5865F2">
+                                            <path
+                                                d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 0 0-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 0 0-5.487 0 12.36 12.36 0 0 0-.617-1.23A.077.077 0 0 0 8.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 0 0-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 0 0 .031.055 20.03 20.03 0 0 0 5.993 2.98.078.078 0 0 0 .084-.026 13.83 13.83 0 0 0 1.226-1.963.074.074 0 0 0-.041-.104 13.175 13.175 0 0 1-1.872-.878.075.075 0 0 1-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 0 1 .078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 0 1 .079.009c.12.098.245.195.372.288a.075.075 0 0 1-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 0 0-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 0 0 .084.028 19.963 19.963 0 0 0 6.002-2.981.076.076 0 0 0 .032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 0 0-.031-.028z" />
+                                        </svg></div>
+                                    <div class="platform-info">
+                                        <h4>Discord</h4>
+                                        <p>Run <code style="font-size:0.75rem">python run.py --discord</code> with a bot
+                                            token.</p>
+                                    </div>
+                                    <span class="badge badge-info">Optional</span>
+                                    <button class="btn btn-success btn-sm">Connect</button>
+                                </div>
+                                <div class="platform-item" style="opacity:0.92">
+                                    <div class="platform-logo" style="background:rgba(37,211,102,0.12)"><svg width="24"
+                                            height="24" viewBox="0 0 24 24" fill="#25D366">
+                                            <path
+                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                                        </svg></div>
+                                    <div class="platform-info">
+                                        <h4>WhatsApp</h4>
+                                        <p>Set <code style="font-size:0.75rem">WHATSAPP_WEBHOOK_ENABLED=true</code> in
+                                            .env after Meta Business setup.</p>
+                                    </div>
+                                    <span class="badge badge-info">Optional</span>
+                                    <button class="btn btn-success btn-sm">Connect</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NLP -->
+                        <div class="settings-panel" id="panel-nlp">
+                            <div class="settings-section">
+                                <div class="settings-section-title">NLP & AI Settings</div>
+                                <div class="settings-section-sub">Configure how the AI processes your natural language
+                                    commands.</div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>AI Model</h4>
+                                        <p>Primary language model for intent detection</p>
+                                    </div><select class="input-field select-field" style="width:180px">
+                                        <option selected>GPT-4 (Best accuracy)</option>
+                                        <option>GPT-3.5 (Faster)</option>
+                                        <option>On-Premise (Private)</option>
+                                    </select>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Conversation Memory</h4>
+                                        <p>Remember context across messages for multi-step commands</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Pattern Learning</h4>
+                                        <p>Improve accuracy by learning your transaction patterns</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Voice Commands</h4>
+                                        <p>Enable speech-to-transaction via microphone</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Confirmations</h4>
+                                        <p>Always show transaction preview before executing</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Fallback to Manual</h4>
+                                        <p>If NLP fails, show manual transaction form</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Primary Language</h4>
+                                        <p>Language for NLP processing</p>
+                                    </div><select class="input-field select-field" style="width:180px">
+                                        <option selected>English</option>
+                                        <option>Hindi</option>
+                                        <option>Spanish</option>
+                                        <option>Japanese</option>
+                                        <option>Arabic</option>
+                                        <option>French</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NOTIFICATIONS -->
+                        <div class="settings-panel" id="panel-notifications">
+                            <div class="settings-section">
+                                <div class="settings-section-title">Notification Preferences</div>
+                                <div class="settings-section-sub">Choose when and how NLTX notifies you.</div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Transaction Confirmations</h4>
+                                        <p>Notify on blockchain confirmation of each transaction</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Failed Transactions</h4>
+                                        <p>Immediate alert if any transaction fails</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Large Incoming Payments</h4>
+                                        <p>Alert for received payments above $100</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Spending Limit Warnings</h4>
+                                        <p>Notify at 80% of daily/weekly limit</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Security Alerts</h4>
+                                        <p>New login device, suspicious activity, 2FA events</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Price Alerts</h4>
+                                        <p>Custom price targets for your portfolio tokens</p>
+                                    </div>
+                                    <div class="toggle"></div>
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Scheduled Payment Reminders</h4>
+                                        <p>24h before recurring payment executes</p>
+                                    </div>
+                                    <div class="toggle on"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- API -->
+                        <div class="settings-panel" id="panel-api">
+                            <div class="settings-section">
+                                <div class="settings-section-title">API Access</div>
+                                <div class="settings-section-sub">Integrate NLTX into your own applications using our
+                                    REST API.</div>
+                                <div style="margin-bottom:20px">
+                                    <div class="input-group" style="margin-bottom:12px"><label class="input-label">API
+                                            Key</label>
+                                        <div style="display:flex;gap:10px"><input type="password" class="input-field"
+                                                value="nltx_sk_live_abc123def456xyz789secret" id="apiKeyInput"
+                                                readonly /><button class="btn btn-secondary btn-sm"
+                                                onclick="document.getElementById('apiKeyInput').type=document.getElementById('apiKeyInput').type==='password'?'text':'password'">👁</button><button
+                                                class="btn btn-secondary btn-sm"
+                                                onclick="navigator.clipboard.writeText('nltx_sk_live_abc123def456xyz789secret');this.textContent='✅ Copied'">📋
+                                                Copy</button></div>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm">🔄 Regenerate Key</button>
+                                </div>
+                                <div
+                                    style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;font-family:monospace;font-size:0.8rem;color:#a78bfa;line-height:1.8">
+                                    POST https://api.nltx.io/v1/send<br>
+                                    Authorization: Bearer nltx_sk_live_abc123...<br>
+                                    Content-Type: application/json<br><br>
+                                    {<br>
+                                    &nbsp;&nbsp;"command": "Send 50 USDT to alice",<br>
+                                    &nbsp;&nbsp;"user_id": "rahul",<br>
+                                    &nbsp;&nbsp;"confirm": true<br>
+                                    }
+                                </div>
+                                <div class="settings-row" style="margin-top:16px">
+                                    <div class="settings-row-label">
+                                        <h4>Webhook URL</h4>
+                                        <p>Receive real-time transaction events</p>
+                                    </div><input type="url" class="input-field"
+                                        placeholder="https://yourapp.com/webhook" style="width:220px" />
+                                </div>
+                                <div class="settings-row">
+                                    <div class="settings-row-label">
+                                        <h4>Rate Limit</h4>
+                                        <p>Current plan: 1,000 requests/hour</p>
+                                    </div><span class="badge badge-info">Enterprise Plan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- CONNECTION MODAL -->
+    <div id="connectModal" class="modal-overlay hidden">
+        <div class="modal-card" style="max-width:400px">
+            <div class="modal-header">
+                <h3 id="connectTitle">Connect Telegram</h3>
+                <button class="close-btn" id="closeConnectModal">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align:center; padding:30px 20px">
+                <div id="platformIcon" style="font-size:3rem; margin-bottom:20px">🔹</div>
+                <p style="color:var(--text-secondary); margin-bottom:24px">For <strong>Telegram</strong>, open your bot
+                    and send <code>/start</code> with this code. Optional platforms use the same code where supported.
+                </p>
+                <div id="linkCodeDisplay"
+                    style="font-family:var(--font-display); font-size:2rem; font-weight:700; color:#a78bfa; background:var(--bg-secondary); padding:15px; border-radius:12px; border:1px solid var(--accent-purple); letter-spacing:2px; margin-bottom:20px">
+                    NLTX-XXXXXX</div>
+                <p style="font-size:0.8rem; color:var(--text-muted)">Code expires in 5 minutes.</p>
+                <div style="margin-top:30px">
+                    <a id="botLink" href="#" target="_blank" class="btn btn-primary"
+                        style="width:100%; justify-content:center">Open in Telegram</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/api.js"></script>
+    <script src="src/settings.js"></script>
+</body>
+
+</html>

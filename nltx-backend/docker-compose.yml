@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  nltx-api:
+    build: .
+    container_name: nltx-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    restart: always
+  # Optional: For frontend (if using Nginx or similar)
+  # nltx-frontend:
+  #   image: nginx:alpine
+  #   ports:
+  #     - "3000:80"
+  #   volumes:
+  #     - ../nltx-app:/usr/share/nginx/html
